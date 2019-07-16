@@ -9,7 +9,7 @@ export const context = [
         "le",
         "shekcon",
         "shekcon@gmail.com",
-        "shekcon",
+        "123456789",
         UserRole.admin
     ),
     new User(
@@ -18,6 +18,6 @@ export const context = [
         "Mr",
         "lsang",
         "sang@gmail.com",
-        "sang"
+        "123456789"
     )
 ];

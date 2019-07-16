@@ -11,7 +11,7 @@ export class UsersService {
     private users: User[] = context;
 
     private findUser(id: number): { user: User, i: number } {
-        const index = this.users.findIndex((user) => user.id === id);
+        const index = this.users.findIndex((user) => user.id == id);
         const user = this.users[index];
         if (!user) {
             throw new NotFoundException("Could not find user");
