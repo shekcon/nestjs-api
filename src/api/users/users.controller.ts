@@ -3,11 +3,12 @@ import { UsersService } from "./users.service";
 import { User } from "./resources/users.model";
 import { UserPostDto } from "./resources/dto/users.post";
 import { UserPatchDto } from "./resources/dto/user.patch";
-import { UserInfo } from "./resources/user.info";
-import { AuthGuard } from "@nestjs/passport";
+import { UserInfo } from "./resources/users.info";
 import { ApiBearerAuth, ApiUseTags } from "@nestjs/swagger";
 import { Roles } from "../auth/roles/roles.decorator";
 import { RolesGuard } from "../auth/roles/roles.guard";
+import { UserRole } from "./resources/users.role";
+import { Authorize } from "../auth/auth.guard";
 
 
 @ApiUseTags('Users')
@@ -23,8 +24,8 @@ export class UsersController {
     }
 
     @ApiBearerAuth()
-    @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles('admin')
+    @UseGuards(Authorize, RolesGuard)
+    @Roles(UserRole.admin)
     @Get()
     @Header("Content-Type", "application/json")
     getAll(): User[] {
@@ -32,7 +33,7 @@ export class UsersController {
     }
 
     @ApiBearerAuth()
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(Authorize)
     @Get(':id')
     @Header("Content-Type", "application/json")
     getById(
@@ -42,7 +43,7 @@ export class UsersController {
     }
 
     @ApiBearerAuth()
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(Authorize)
     @Patch(':id')
     @Header("Content-Type", "application/json")
     updateUser(
@@ -53,7 +54,7 @@ export class UsersController {
     }
 
     @ApiBearerAuth()
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(Authorize)
     @Delete(':id')
     @Header("Content-Type", "application/json")
     deleteUser(

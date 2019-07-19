@@ -3,7 +3,7 @@ import { User } from "./resources/users.model";
 import { context } from "./data/users.context";
 import { UserPostDto } from "./resources/dto/users.post";
 import { UserPatchDto } from "./resources/dto/user.patch";
-import { UserInfo } from "./resources/user.info";
+import { UserInfo } from "./resources/users.info";
 
 @Injectable()
 export class UsersService {

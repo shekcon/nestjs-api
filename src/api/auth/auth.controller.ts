@@ -3,6 +3,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
 import { ApiBearerAuth, ApiUseTags } from "@nestjs/swagger";
 import { LoginDto } from "./dto/auth.login";
+import { Authorize } from "./auth.guard";
 
 @ApiUseTags('Auth')
 @Controller('api/auth')
@@ -19,14 +20,14 @@ export class AuthController {
     }
 
     @ApiBearerAuth()
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(Authorize)
     @Get('auth/user')
     getUser(@Request() req: any) {
         return req.user;
     }
 
     @ApiBearerAuth()
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(Authorize)
     @Get('auth/admin')
     getAdmin(@Request() req: any) {
         return req.user;
