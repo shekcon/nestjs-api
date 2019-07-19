@@ -20,8 +20,15 @@ export class AuthController {
 
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
-    @Get('authorize')
-    getProfile(@Request() req: any) {
+    @Get('auth/user')
+    getUser(@Request() req: any) {
+        return req.user;
+    }
+
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard('jwt'))
+    @Get('auth/admin')
+    getAdmin(@Request() req: any) {
         return req.user;
     }
 

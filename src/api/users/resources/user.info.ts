@@ -8,6 +8,6 @@ export class UserInfo {
         public lastname: string,
         public username: string,
         public email: string,
-        public role: number = UserRole.user
+        public role: string = UserRole.user
     ) { }
 }

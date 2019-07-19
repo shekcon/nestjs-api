@@ -6,6 +6,9 @@ import { UserPatchDto } from "./resources/dto/user.patch";
 import { UserInfo } from "./resources/user.info";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiBearerAuth, ApiUseTags } from "@nestjs/swagger";
+import { Roles } from "../auth/roles/roles.decorator";
+import { RolesGuard } from "../auth/roles/roles.guard";
+
 
 @ApiUseTags('Users')
 @Controller("api/users")
@@ -20,7 +23,8 @@ export class UsersController {
     }
 
     @ApiBearerAuth()
-    @UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'), RolesGuard)
+    @Roles('admin')
     @Get()
     @Header("Content-Type", "application/json")
     getAll(): User[] {
