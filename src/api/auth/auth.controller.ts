@@ -3,7 +3,8 @@ import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
 import { ApiBearerAuth, ApiUseTags } from "@nestjs/swagger";
 import { LoginDto } from "./dto/auth.login";
-import { Authorize } from "./auth.guard";
+import { Authorize } from "./authorize/auth.guard";
+
 
 @ApiUseTags('Auth')
 @Controller('api/auth')
