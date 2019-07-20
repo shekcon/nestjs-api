@@ -5,23 +5,20 @@ import { UserPostDto } from "./resources/dto/users.post";
 import { UserPatchDto } from "./resources/dto/user.patch";
 import { UserInfo } from "./resources/users.info";
 import { ApiBearerAuth, ApiUseTags } from "@nestjs/swagger";
-import { Roles } from "../auth/roles/roles.decorator";
-import { RolesGuard } from "../auth/roles/roles.guard";
+import { Roles } from "../auth/decorators/roles.decorator";
+import { RolesGuard } from "../auth/guards/roles.guard";
 import { UserRole } from "./resources/users.role";
-import { Authorize } from "../auth/authorize/auth.guard";
-import { Anonymous } from "../auth/authorize/auth.decorator";
+import { Authorize } from "../auth/guards/authorize.guard";
+import { Anonymous } from "../auth/decorators/anonymous.decorator";
+import { Claim } from "../auth/decorators/claim.decorator";
+import { ClaimGuard } from "../auth/guards/claim.guard";
 
-@UseGuards(Authorize, RolesGuard)
+@UseGuards(Authorize, RolesGuard, ClaimGuard)
 @ApiUseTags('Users')
 @Controller("api/users")
 export class UsersController {
     constructor(private readonly service: UsersService) { }
 
-    private checkPermission(id: number, user: any){
-        if (id == user.id && user.role != UserRole.admin){
-            throw new ForbiddenException();
-        }
-    }
     @Post()
     @Anonymous()
     @Header("Content-Type", "application/json")
@@ -38,37 +35,34 @@ export class UsersController {
         return this.service.getAll();
     }
 
+    @Claim()
     @ApiBearerAuth()
     @Get(':id')
     @Header("Content-Type", "application/json")
     getById(
-        @Param('id') id: number,
-        @Request() req: any
+        @Param('id') id: number
     ): User {
-        this.checkPermission(id, req.user);
         return this.service.getById(id);
     }
 
+    @Claim()
     @ApiBearerAuth()
     @Patch(':id')
     @Header("Content-Type", "application/json")
     updateUser(
         @Param('id') id: number,
-        @Body() user: UserPatchDto,
-        @Request() req: any
+        @Body() user: UserPatchDto
     ): User {
-        this.checkPermission(id, req.user);
         return this.service.updateUser(id, user);
     }
 
+    @Claim()
     @ApiBearerAuth()
     @Delete(':id')
     @Header("Content-Type", "application/json")
     deleteUser(
-        @Param('id') id: number,
-        @Request() req: any
+        @Param('id') id: number
     ) {
-        this.checkPermission(id, req.user);
         this.service.deteleUser(id);
         return { message: "Delete user successfully!" };
     }

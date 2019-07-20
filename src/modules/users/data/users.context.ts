@@ -19,5 +19,13 @@ export const context = [
         "lsang",
         "sang@gmail.com",
         "123456789"
+    ),
+    new User(
+        3,
+        "shekcon",
+        "Mr",
+        "lsang1",
+        "example@gmail.com",
+        "123456789"
     )
 ];

@@ -2,6 +2,7 @@ import { Injectable, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
+import { TypeAuth } from '../type.decorator';
 
 @Injectable()
 export class Authorize extends AuthGuard('jwt') {
@@ -11,7 +12,7 @@ export class Authorize extends AuthGuard('jwt') {
     canActivate(
         context: ExecutionContext,
     ): boolean | Promise<boolean> | Observable<boolean> {
-        const isAnonymous = this.reflector.get<string[]>('Anonymous', context.getHandler());
+        const isAnonymous = this.reflector.get<string[]>(TypeAuth.Anonymous, context.getHandler());
         if (isAnonymous){
             return true;
         }
