@@ -23,19 +23,20 @@ import { UserRole } from "../users/users.role";
   controllers: [AuthController]
 })
 export class AuthModule implements OnModuleInit {
-  constructor(
-    private readonly userService: UsersService
-  ) {}
+  constructor(private readonly userService: UsersService) {}
 
   private async initUser() {
-    const init = await this.userService.findOne({ username: "admin" }, false);
+    const init = await this.userService.findOne(
+      { username: process.env.USERNAME_ADMIN || "admin" },
+      false
+    );
     if (!init) {
       await this.userService.create({
         firstname: "Sang",
         lastname: "Le",
-        username: "admin",
+        username: process.env.USERNAME_ADMIN || "admin",
         email: "quangsang9773@gmail.com",
-        password: "123456789",
+        password: process.env.PASSWORD_ADMIN || "123456789",
         role: UserRole.admin
       });
     }
@@ -46,6 +47,6 @@ export class AuthModule implements OnModuleInit {
       await this.initUser();
     } catch (error) {
       console.log(error);
-    } 
+    }
   }
 }
