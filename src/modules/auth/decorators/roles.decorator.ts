@@ -1,4 +1,4 @@
-import { SetMetadata } from '@nestjs/common';
-import { TypeAuth } from '../type.decorator';
+import { SetMetadata } from "@nestjs/common";
+import { AuthType } from "../auth.type";
 
-export const Roles = (...roles: string[]) => SetMetadata(TypeAuth.Roles, roles);
+export const Roles = (...roles: string[]) => SetMetadata(AuthType.Roles, roles);

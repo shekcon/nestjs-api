@@ -1,6 +1,6 @@
-import { Request } from 'express';
-import { IToken } from './token.interface';
+import { Request } from "express";
+import { IToken } from "./token.interface";
 
 export declare interface IRequest extends Request {
-    user: IToken
+  user: IToken;
 }

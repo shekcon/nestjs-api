@@ -1,4 +1,4 @@
-import { SetMetadata } from '@nestjs/common';
-import { TypeAuth } from '../type.decorator';
+import { SetMetadata } from "@nestjs/common";
+import { AuthType } from "../auth.type";
 
-export const Claim = () => SetMetadata(TypeAuth.Claim, "owner");
+export const Claim = () => SetMetadata(AuthType.Claim, "owner");

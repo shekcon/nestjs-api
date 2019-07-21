@@ -1,5 +1,5 @@
 export interface IToken {
-    id: number,
-    username: string,
-    role: string
+  id: number;
+  username: string;
+  role: string;
 }
