@@ -1,6 +1,6 @@
 import { Request } from "express";
 import { IToken } from "./token.interface";
 
-export declare interface IRequest extends Request {
+export interface IAuthRequest extends Request {
   user: IToken;
 }

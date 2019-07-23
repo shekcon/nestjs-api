@@ -5,14 +5,20 @@ import {
   Request,
   Get,
   Response,
-  Body
+  Body,
+  UseFilters
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
 import { ApiBearerAuth, ApiUseTags } from "@nestjs/swagger";
 import { LoginDto } from "./dto/login.dto";
 import { Authorize } from "./guards/authorize.guard";
+import { IResponse } from "../common/interfaces/response.interface";
+import { IAuthRequest } from "./interfaces/request.interface";
+import { RolesGuard } from "./guards/roles.guard";
+import { Roles } from "./decorators/roles.decorator";
 
+@UseFilters()
 @ApiUseTags("Auth")
 @Controller("api/auth")
 export class AuthController {
@@ -24,22 +30,23 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
+  @UseGuards(Authorize, RolesGuard)
+  @Roles("admin")
   @ApiBearerAuth()
-  @UseGuards(Authorize)
   @Get("auth/user")
-  getUser(@Request() req: any) {
+  getUser(@Request() req: IAuthRequest) {
     return req.user;
   }
 
   @ApiBearerAuth()
   @UseGuards(Authorize)
   @Get("auth/admin")
-  getAdmin(@Request() req: any) {
+  getAdmin(@Request() req: IAuthRequest) {
     return req.user;
   }
 
   @Post("register")
-  async register(@Response() res: any) {
+  async register(@Response() res: IResponse) {
     res.redirect(307, "/api/users");
   }
 }
