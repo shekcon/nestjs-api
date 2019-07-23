@@ -18,8 +18,10 @@ async function bootstrap() {
     .setTitle("CRUD User API")
     .setDescription("Create, update, delete and read one or more user")
     .setVersion("1.0")
-    .addTag("users")
+    .addTag("Users", "CRUD user & must to authorize before perform action")
+    .addTag("Auth", "Authenticate & Authorize role & Create token access")
     .addBearerAuth()
+    .setSchemes(process.env.NODE_ENV != 'production' ? "http" : "https")
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("api", app, document);
