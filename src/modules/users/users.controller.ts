@@ -8,7 +8,9 @@ import {
   Patch,
   Delete,
   HttpCode,
-  UseGuards
+  UseGuards,
+  UseFilters,
+  UseInterceptors
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { UserPostDto } from "./dto/users.post";
@@ -24,6 +26,8 @@ import { Claim } from "../auth/decorators/claim.decorator";
 import { ClaimGuard } from "../auth/guards/claim.guard";
 import { User } from "./users.entity";
 
+@UseFilters()
+@UseInterceptors()
 @UseGuards(Authorize, RolesGuard, ClaimGuard)
 @ApiUseTags("Users")
 @Controller("api/users")

@@ -6,7 +6,8 @@ import {
   Get,
   Response,
   Body,
-  UseFilters
+  UseFilters,
+  UseInterceptors
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
@@ -18,6 +19,7 @@ import { IAuthRequest } from "./interfaces/request.interface";
 import { RolesGuard } from "./guards/roles.guard";
 import { Roles } from "./decorators/roles.decorator";
 
+@UseInterceptors()
 @UseFilters()
 @ApiUseTags("Auth")
 @Controller("api/auth")

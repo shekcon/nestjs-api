@@ -1,16 +1,19 @@
-import { Module } from "@nestjs/common";
+import { Module, CacheInterceptor, CacheModule } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { UsersModule } from "./modules/users/users.module";
 import { AuthModule } from "./modules/auth/auth.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./modules/users/users.entity";
-import { APP_FILTER } from "@nestjs/core";
-import { AllExceptionsFilter } from "./modules/common/filters/allexceptions.filter";
 import { DATABASE_URL, DATABASE_TYPE } from "./modules/common/config";
+import { APP_INTERCEPTOR } from "@nestjs/core";
 
 @Module({
   imports: [
+    CacheModule.register({
+      ttl: 60, // seconds
+      max: 10 // maximum number of items in cache
+    }),
     AuthModule,
     UsersModule,
     TypeOrmModule.forRoot({
@@ -28,8 +31,8 @@ import { DATABASE_URL, DATABASE_TYPE } from "./modules/common/config";
   providers: [
     AppService,
     {
-      provide: APP_FILTER,
-      useClass: AllExceptionsFilter
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor
     }
   ]
 })
