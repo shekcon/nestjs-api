@@ -1,3 +1,7 @@
-import { Response } from "express";
+import { Request } from "express";
+import { IUser } from "../../users/interfaces/users.interface";
+import { IToken } from "../../auth/interfaces/token.interface";
 
-export interface IResponse extends Response {}
+export interface IRequest extends Request {
+  user?: IUser | IToken;
+}

@@ -6,7 +6,7 @@ import {
   HttpStatus
 } from "@nestjs/common";
 import { QueryFailedError } from "typeorm";
-import { IResponse } from "../interfaces/request.interface";
+import { IResponse } from "../interfaces/response.interface";
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {

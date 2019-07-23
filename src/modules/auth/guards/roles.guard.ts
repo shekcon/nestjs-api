@@ -1,7 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { IAuthRequest } from "../interfaces/request.interface";
 import { AuthType } from "../auth.type";
+import { IRequest } from "../../common/interfaces/request.interface";
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -15,7 +15,7 @@ export class RolesGuard implements CanActivate {
     if (!roles) {
       return true;
     }
-    const request: IAuthRequest = context.switchToHttp().getRequest();
+    const request: IRequest = context.switchToHttp().getRequest();
     const user = request.user;
     const hasRole = (): boolean => roles.includes(user.role);
     return user && user.role && hasRole();

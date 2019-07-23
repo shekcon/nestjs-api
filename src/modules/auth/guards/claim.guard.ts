@@ -1,7 +1,8 @@
 import { Injectable, CanActivate, ExecutionContext } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { IAuthRequest } from "../interfaces/request.interface";
+
 import { AuthType } from "../auth.type";
+import { IRequest } from "../../common/interfaces/request.interface";
 
 @Injectable()
 export class ClaimGuard implements CanActivate {
@@ -15,7 +16,7 @@ export class ClaimGuard implements CanActivate {
     if (!claim) {
       return true;
     }
-    const request: IAuthRequest = context.switchToHttp().getRequest();
+    const request: IRequest = context.switchToHttp().getRequest();
     const user = request.user;
     const hasClaim = (): boolean => request.params.id == user.id;
     return user && user.role && hasClaim();

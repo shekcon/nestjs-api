@@ -15,9 +15,9 @@ import { ApiBearerAuth, ApiUseTags } from "@nestjs/swagger";
 import { LoginDto } from "./dto/login.dto";
 import { Authorize } from "./guards/authorize.guard";
 import { IResponse } from "../common/interfaces/response.interface";
-import { IAuthRequest } from "./interfaces/request.interface";
 import { RolesGuard } from "./guards/roles.guard";
 import { Roles } from "./decorators/roles.decorator";
+import { IRequest } from "../common/interfaces/request.interface";
 
 @UseInterceptors()
 @UseFilters()
@@ -28,7 +28,7 @@ export class AuthController {
 
   @UseGuards(AuthGuard("local"))
   @Post("login")
-  async login(@Request() req: any, @Body() user: LoginDto) {
+  async login(@Request() req: IRequest, @Body() user: LoginDto) {
     return this.authService.login(req.user);
   }
 
@@ -36,14 +36,14 @@ export class AuthController {
   @Roles("admin")
   @ApiBearerAuth()
   @Get("auth/user")
-  getUser(@Request() req: IAuthRequest) {
+  getUser(@Request() req: IRequest) {
     return req.user;
   }
 
   @ApiBearerAuth()
   @UseGuards(Authorize)
   @Get("auth/admin")
-  getAdmin(@Request() req: IAuthRequest) {
+  getAdmin(@Request() req: IRequest) {
     return req.user;
   }
 
