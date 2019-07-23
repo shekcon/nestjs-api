@@ -13,10 +13,14 @@ import { User } from "./modules/users/users.entity";
     UsersModule,
     TypeOrmModule.forRoot({
       type: "postgres",
+      // We need add the extra SSL to use heroku on localhost
+      extra: {
+        ssl: true,
+      },
       url: process.env.DATABASE_URL || "postgres://postgres:123456@localhost:5432/nestjs_api",
-      synchronize: true,
+      // synchronize: true,
       entities: [User],
-  })
+    })
   ],
   controllers: [AppController],
   providers: [AppService]
