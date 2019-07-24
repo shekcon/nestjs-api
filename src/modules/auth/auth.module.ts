@@ -33,6 +33,10 @@ import {
 export class AuthModule implements OnModuleInit {
   constructor(private readonly userService: UsersService) {}
 
+  public async onModuleInit() {
+    await this.initUser();
+  }
+
   private async initUser() {
     const init = await this.userService.findOne(
       { username: ADMIN_USERNAME },
@@ -48,9 +52,5 @@ export class AuthModule implements OnModuleInit {
         role: UserRole.admin
       });
     }
-  }
-
-  public async onModuleInit() {
-    await this.initUser();
   }
 }

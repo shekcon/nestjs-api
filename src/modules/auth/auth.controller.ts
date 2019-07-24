@@ -18,6 +18,7 @@ import { IResponse } from "../common/interfaces/response.interface";
 import { RolesGuard } from "./guards/roles.guard";
 import { Roles } from "./decorators/roles.decorator";
 import { IRequest } from "../common/interfaces/request.interface";
+import { UserPostDto } from "../users/dto/users.post";
 
 @UseInterceptors()
 @UseFilters()
@@ -48,7 +49,7 @@ export class AuthController {
   }
 
   @Post("register")
-  async register(@Response() res: IResponse) {
+  async register(@Response() res: IResponse, @Body() user: UserPostDto) {
     res.redirect(307, "/api/users");
   }
 }
