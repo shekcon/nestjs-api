@@ -9,7 +9,7 @@ import {
 import { Crud, Override } from "@nestjsx/crud";
 import { Hero } from "./hero.entity";
 import { HeroesService } from "./heroes.service";
-import { ApiUseTags } from "@nestjs/swagger";
+import { ApiUseTags, ApiBearerAuth } from "@nestjs/swagger";
 import { Roles } from "../auth/decorators/roles.decorator";
 import { UserRole } from "../users/users.role";
 import { Authorize } from "../auth/guards/authorize.guard";
@@ -29,22 +29,22 @@ import { Claim } from "../auth/decorators/claim.decorator";
   routes: {
     exclude: ["createManyBase"],
     getManyBase: {
-      decorators: [Roles(UserRole.admin)]
+      decorators: [Roles(UserRole.admin), ApiBearerAuth()]
     },
     getOneBase: {
-      decorators: [Claim()]
+      decorators: [Claim(), ApiBearerAuth()]
     },
     createOneBase: {
       decorators: [Anonymous()]
     },
     updateOneBase: {
-      decorators: [Claim()]
+      decorators: [Claim(), ApiBearerAuth()]
     },
     replaceOneBase: {
-      decorators: [Claim()]
+      decorators: [Claim(), ApiBearerAuth()]
     },
     deleteOneBase: {
-      decorators: [Claim()],
+      decorators: [Claim(), ApiBearerAuth()],
       returnDeleted: true
     }
   }
@@ -53,16 +53,16 @@ import { Claim } from "../auth/decorators/claim.decorator";
 export class HeroesController {
   constructor(public service: HeroesService) {}
 
-  @Override("createOneBase")
-  createHero(@Body() hero: Hero) {
-    return this.service.create(hero);
-  }
-  @Override("getManyBase")
-  getAll() {
-    return this.service.getAll();
-  }
-  @Override("getOneBase")
-  findSingle(@Param("id") id: number) {
-    return this.service.findSingle(id);
-  }
+  // @Override("createOneBase")
+  // createHero(@Body() hero: Hero) {
+  //   return this.service.create(hero);
+  // }
+  // @Override("getManyBase")
+  // getAll() {
+  //   return this.service.getAll();
+  // }
+  // @Override("getOneBase")
+  // findSingle(@Param("id") id: number) {
+  //   return this.service.findSingle(id);
+  // }
 }

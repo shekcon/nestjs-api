@@ -20,7 +20,7 @@ async function bootstrap() {
     .setTitle("CRUD User API")
     .setDescription("Create, update, delete and read one or more user")
     .setVersion("1.0")
-    .addTag("Info", "Nestjs + TypeOrm + PostgreSQL")
+    .addTag("Intro", "Nestjs + TypeOrm + PostgreSQL")
     .addTag("Auth", "Authenticate & Authorize role & Create token access")
     .addTag("Users", "CRUD user & must to authorize before perform action")
     .addBearerAuth()
