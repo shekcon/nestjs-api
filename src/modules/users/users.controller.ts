@@ -17,12 +17,10 @@ import { UserPostDto } from "./dto/users.post";
 import { UserPatchDto } from "./dto/user.patch";
 import { UserResponse } from "./interfaces/response.interface";
 import { ApiBearerAuth, ApiUseTags } from "@nestjs/swagger";
-import { Roles } from "../auth/decorators/roles.decorator";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { UserRole } from "./users.role";
 import { Authorize } from "../auth/guards/authorize.guard";
-import { Anonymous } from "../auth/decorators/anonymous.decorator";
-import { Claim } from "../auth/decorators/claim.decorator";
+import { Anonymous, Roles, Claim } from "../auth/decorators/auth.decorator";
 import { ClaimGuard } from "../auth/guards/claim.guard";
 import { User } from "./users.entity";
 

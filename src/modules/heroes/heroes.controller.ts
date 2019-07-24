@@ -2,21 +2,17 @@ import {
   Controller,
   UseGuards,
   UseFilters,
-  UseInterceptors,
-  Body,
-  Param
+  UseInterceptors
 } from "@nestjs/common";
 import { Crud, Override } from "@nestjsx/crud";
 import { Hero } from "./hero.entity";
 import { HeroesService } from "./heroes.service";
 import { ApiUseTags, ApiBearerAuth } from "@nestjs/swagger";
-import { Roles } from "../auth/decorators/roles.decorator";
 import { UserRole } from "../users/users.role";
 import { Authorize } from "../auth/guards/authorize.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { ClaimGuard } from "../auth/guards/claim.guard";
-import { Anonymous } from "../auth/decorators/anonymous.decorator";
-import { Claim } from "../auth/decorators/claim.decorator";
+import { Anonymous, Roles, Claim } from "../auth/decorators/auth.decorator";
 
 @UseInterceptors()
 @UseFilters()
