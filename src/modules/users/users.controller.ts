@@ -77,4 +77,9 @@ export class UsersController {
     this.userService.detele({ id: id });
     return { message: "Delete user successfully!" };
   }
+  @Get("test/rawquery")
+  @Anonymous()
+  async runRawQuery() {
+    return await this.userService.runRawQuery();
+  }
 }

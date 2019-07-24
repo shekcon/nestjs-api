@@ -7,6 +7,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./modules/users/users.entity";
 import { DATABASE_URL, DATABASE_TYPE } from "./modules/common/config";
 import { APP_INTERCEPTOR } from "@nestjs/core";
+import { DatabaseService } from "./modules/database/database.service";
+import { DatabaseModule } from "./modules/database/database.module";
 
 @Module({
   imports: [
@@ -25,7 +27,8 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
       url: DATABASE_URL,
       synchronize: true,
       entities: [User]
-    })
+    }),
+    DatabaseModule
   ],
   controllers: [AppController],
   providers: [
@@ -33,7 +36,8 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor
-    }
+    },
+    DatabaseService
   ]
 })
 export class AppModule {}

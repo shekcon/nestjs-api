@@ -6,13 +6,15 @@ import { Repository } from "typeorm";
 import { UserOption } from "./interfaces/option.interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { IUser } from "./interfaces/users.interface";
+import { DatabaseService } from "../database/database.service";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly pwdService: PasswordService
+    private readonly pwdService: PasswordService,
+    private readonly databaseService: DatabaseService
   ) {}
 
   async create(user: IUser): Promise<UserResponse> {
@@ -63,5 +65,9 @@ export class UsersService {
       throw new NotFoundException("Can't find user");
     }
     this.userRepository.remove(user);
+  }
+
+  async runRawQuery() {
+    return await this.databaseService.runRawQuery();
   }
 }
