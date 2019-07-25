@@ -30,13 +30,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
       });
     }
 
-    // handle not found image
-    if (ex.status === 404)
-      return res.status(status).json({
-        statusCode: 404,
-        error: "Bad Request",
-        message: "Image isn't found"
-      });
     return res.status(status).json(ex.message);
   }
 }
