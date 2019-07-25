@@ -67,7 +67,7 @@ export class UsersService {
     this.userRepository.remove(user);
   }
 
-  async runRawQuery() {
-    return await this.databaseService.runRawQuery();
+  async runRawQuery(username: string) {
+    return await this.databaseService.runRawQuery(username);
   }
 }

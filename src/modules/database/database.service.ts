@@ -17,10 +17,10 @@ export class DatabaseService {
       .from(User, "user")
       .execute();
   }
-  async runRawQuery() {
+  async runRawQuery(username: string) {
     return await this.manger.query(
-      'SELECT * FROM public."Users" WHERE username=$1',
-      ["shekcon"]
+      'SELECT * FROM public."Users" WHERE username=$1 AND role!=1',
+      [username]
     );
   }
 }

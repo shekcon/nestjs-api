@@ -6,15 +6,18 @@ import {
   Request,
   Get,
   Param,
-  Res
+  Res,
+  UseGuards
 } from "@nestjs/common";
 import { ApiConsumes, ApiImplicitFile, ApiUseTags } from "@nestjs/swagger";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { extname } from "path";
 import { IRequest } from "../common/interfaces/request.interface";
-import { IResponse } from "dist/modules/common/interfaces/response.interface";
+import { Authorize } from "../auth/guards/authorize.guard";
+import { Anonymous } from "../auth/decorators/auth.decorator";
 
+@UseGuards(Authorize)
 @ApiUseTags("Images")
 @Controller("api/images")
 export class ImagesController {
@@ -30,6 +33,7 @@ export class ImagesController {
     })
   )
   @ApiConsumes("multipart/form-data")
+  @Anonymous()
   @ApiImplicitFile({
     name: "file",
     required: true,
@@ -42,7 +46,7 @@ export class ImagesController {
   }
 
   @Get(':fileId')
-  async serveAvatar(@Param('fileId') fileId: string, @Res() res: IResponse): Promise<any> {
+  async serveAvatar(@Param('fileId') fileId: string, @Res() res: any): Promise<any> {
     res.sendFile(fileId, { root: 'uploads'});
   }
 }
