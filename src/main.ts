@@ -23,6 +23,8 @@ async function bootstrap() {
     .addTag("Intro", "Nestjs + TypeOrm + PostgreSQL")
     .addTag("Auth", "Authenticate & Authorize role & Create token access")
     .addTag("Users", "CRUD user & must to authorize before perform action")
+    .addTag("Images", "Upload image and retrieve image")
+    .addTag("Heroes", "Using CRUD of nestjs for RESTful APIs")
     .addBearerAuth()
     .setSchemes(SCHEME_SWAGGER)
     .build();
