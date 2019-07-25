@@ -7,6 +7,8 @@ import { DatabaseModule } from "./modules/database/database.module";
 import { TypeOrmImport, CacheImport } from "./app.import";
 import { appProviders } from "./app.provider";
 import { HeroesModule } from "./modules/heroes/heroes.module";
+import { ImagesController } from "./modules/images/images.controller";
+import { ImagesModule } from "./modules/images/images.module";
 
 @Module({
   imports: [
@@ -15,9 +17,10 @@ import { HeroesModule } from "./modules/heroes/heroes.module";
     UsersModule,
     TypeOrmImport,
     DatabaseModule,
-    HeroesModule
+    HeroesModule,
+    ImagesModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, ImagesController],
   providers: [AppService, ...appProviders]
 })
 export class AppModule {}
