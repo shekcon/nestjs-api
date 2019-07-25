@@ -33,7 +33,6 @@ export class ImagesController {
     })
   )
   @ApiConsumes("multipart/form-data")
-  @Anonymous()
   @ApiImplicitFile({
     name: "file",
     required: true,
@@ -46,6 +45,7 @@ export class ImagesController {
   }
 
   @Get(':fileId')
+  @Anonymous()
   async serveAvatar(@Param('fileId') fileId: string, @Res() res: any): Promise<any> {
     res.sendFile(fileId, { root: 'uploads'});
   }

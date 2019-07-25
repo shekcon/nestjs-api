@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
 import { User } from "./users.entity";
 import { UserResponse } from "./interfaces/response.interface";
 import { PasswordService } from "../common/services/password.service";
@@ -38,7 +38,7 @@ export class UsersService {
   async findOne(option: UserOption, isthrowEx: boolean = true): Promise<User> {
     const user = await this.userRepository.findOne(option);
     if (!user && isthrowEx) {
-      throw new NotFoundException("Can't find user");
+      throw new NotFoundException("User isn't found");
     }
     return user;
   }
@@ -46,7 +46,7 @@ export class UsersService {
   async update(userDto: IUser, option: UserOption): Promise<User> {
     const user = await this.userRepository.findOne(option);
     if (!user) {
-      throw new NotFoundException("Can't find user");
+      throw new NotFoundException("User isn't found");
     }
     user.firstname = userDto.firstname || user.firstname;
     user.lastname = userDto.lastname || user.lastname;
@@ -62,12 +62,16 @@ export class UsersService {
   async detele(option: UserOption) {
     const user = await this.userRepository.findOne(option);
     if (!user) {
-      throw new NotFoundException("Can't find user");
+      throw new NotFoundException("User isn't found");
     }
     this.userRepository.remove(user);
   }
 
   async runRawQuery(username: string) {
-    return await this.databaseService.runRawQuery(username);
+    const user = await this.databaseService.findByUsername(username);
+    if(user){
+      throw new BadRequestException("User isn't found")
+    }
+    return user;
   }
 }
