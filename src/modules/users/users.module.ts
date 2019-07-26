@@ -6,7 +6,6 @@ import { User } from "./users.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DatabaseService } from "../database/database.service";
 import { LoggerModule } from "../logger/logger.module";
-import { LoggerService } from "../logger/logger.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), LoggerModule.forRoot()],

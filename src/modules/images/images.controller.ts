@@ -1,6 +1,5 @@
 import {
   Controller,
-  UseInterceptors,
   UploadedFile,
   Post,
   Request,
@@ -8,35 +7,25 @@ import {
   Param,
   Res,
   UseGuards,
-  BadRequestException
+  UseInterceptors
 } from "@nestjs/common";
 import { ApiConsumes, ApiImplicitFile, ApiUseTags } from "@nestjs/swagger";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { diskStorage } from "multer";
-import { extname } from "path";
 import { IRequest } from "../common/interfaces/request.interface";
 import { Authorize } from "../auth/guards/authorize.guard";
 import { Anonymous } from "../auth/decorators/auth.decorator";
 import { IResponse } from "../common/interfaces/response.interface";
+import { ImagesService } from "./images.service";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { async } from "rxjs/internal/scheduler/async";
 
-@UseGuards(Authorize)
+// @UseGuards(Authorize)
 @ApiUseTags("Images")
 @Controller("api/images")
 export class ImagesController {
+  constructor(private readonly imageService: ImagesService) {}
+
   @Post("upload")
-  @UseInterceptors(
-    FileInterceptor("file", {
-      storage: diskStorage({
-        destination: `uploads/`,
-        filename: (req, file, cb) => {
-          return cb(
-            null,
-            `${new Date().toISOString()}${extname(file.originalname)}`
-          );
-        }
-      })
-    })
-  )
+  @UseInterceptors(FileInterceptor("file"))
   @ApiConsumes("multipart/form-data")
   @ApiImplicitFile({
     name: "file",
@@ -54,19 +43,7 @@ export class ImagesController {
 
   @Get(":fileId")
   @Anonymous()
-  async serveAvatar(
-    @Param("fileId") fileId: string,
-    @Res() res: IResponse
-  ): Promise<any> {
-    return res.sendFile(fileId, { root: "uploads" }, (err: any) => {
-      res
-        .status(err.status)
-        .json({
-          status: 404,
-          error: "Bad Request",
-          message: "Image isn't found"
-        })
-        .end();
-    });
+  async serveFile(@Param("fileId") fileId: string, @Res() res: IResponse) {
+    this.imageService.serveStatic(fileId, res);
   }
 }

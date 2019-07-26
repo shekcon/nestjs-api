@@ -7,7 +7,6 @@ import { DatabaseModule } from "./modules/database/database.module";
 import { TypeOrmImport, CacheImport } from "./app.import";
 import { appProviders } from "./app.provider";
 import { HeroesModule } from "./modules/heroes/heroes.module";
-import { ImagesController } from "./modules/images/images.controller";
 import { ImagesModule } from "./modules/images/images.module";
 import { LoggerModule } from "./modules/logger/logger.module";
 
@@ -19,9 +18,10 @@ import { LoggerModule } from "./modules/logger/logger.module";
     TypeOrmImport,
     DatabaseModule,
     HeroesModule,
-    ImagesModule
+    ImagesModule,
+    LoggerModule.forRoot()
   ],
-  controllers: [AppController, ImagesController],
+  controllers: [AppController],
   providers: [AppService, ...appProviders]
 })
 export class AppModule {}

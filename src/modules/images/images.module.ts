@@ -1,13 +1,12 @@
 import { Module } from "@nestjs/common";
 import { ImagesService } from "./images.service";
-import { MulterModule } from "@nestjs/platform-express";
+import { LoggerModule } from "../logger/logger.module";
+import { ImagesController } from "./images.controller";
+import { MulterImport } from "./images.import";
 
 @Module({
-  imports: [
-    MulterModule.register({
-      dest: "upload/"
-    })
-  ],
+  imports: [MulterImport, LoggerModule.forRoot()],
+  controllers: [ImagesController],
   providers: [ImagesService]
 })
 export class ImagesModule {}
