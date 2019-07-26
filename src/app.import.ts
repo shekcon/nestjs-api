@@ -4,6 +4,7 @@ import { CacheModule } from "@nestjs/common";
 import { DATABASE_TYPE, DATABASE_URL } from "./modules/common/config";
 import { User } from "./modules/users/users.entity";
 import { Hero } from "./modules/heroes/hero.entity";
+import { Article } from "./modules/articles/articles.enity";
 
 export const TypeOrmImport = TypeOrmModule.forRoot({
   type: DATABASE_TYPE,
@@ -13,7 +14,7 @@ export const TypeOrmImport = TypeOrmModule.forRoot({
   },
   url: DATABASE_URL,
   synchronize: true,
-  entities: [User, Hero]
+  entities: [User, Hero, Article]
 });
 
 export const CacheImport = CacheModule.register({

@@ -16,9 +16,8 @@ import { Anonymous } from "../auth/decorators/auth.decorator";
 import { IResponse } from "../common/interfaces/response.interface";
 import { ImagesService } from "./images.service";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { async } from "rxjs/internal/scheduler/async";
 
-// @UseGuards(Authorize)
+@UseGuards(Authorize)
 @ApiUseTags("Images")
 @Controller("api/images")
 export class ImagesController {

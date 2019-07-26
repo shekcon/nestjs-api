@@ -9,6 +9,7 @@ import { appProviders } from "./app.provider";
 import { HeroesModule } from "./modules/heroes/heroes.module";
 import { ImagesModule } from "./modules/images/images.module";
 import { LoggerModule } from "./modules/logger/logger.module";
+import { ArticlesModule } from './modules/articles/articles.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { LoggerModule } from "./modules/logger/logger.module";
     DatabaseModule,
     HeroesModule,
     ImagesModule,
-    LoggerModule.forRoot()
+    LoggerModule.forRoot(),
+    ArticlesModule
   ],
   controllers: [AppController],
   providers: [AppService, ...appProviders]
