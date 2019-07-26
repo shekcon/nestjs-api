@@ -9,6 +9,7 @@ import { appProviders } from "./app.provider";
 import { HeroesModule } from "./modules/heroes/heroes.module";
 import { ImagesController } from "./modules/images/images.controller";
 import { ImagesModule } from "./modules/images/images.module";
+import { LoggerModule } from "./modules/logger/logger.module";
 
 @Module({
   imports: [

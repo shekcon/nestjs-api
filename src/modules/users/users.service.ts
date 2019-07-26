@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException
+} from "@nestjs/common";
 import { User } from "./users.entity";
 import { UserResponse } from "./interfaces/response.interface";
 import { PasswordService } from "../common/services/password.service";
@@ -7,10 +11,14 @@ import { UserOption } from "./interfaces/option.interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { IUser } from "./interfaces/users.interface";
 import { DatabaseService } from "../database/database.service";
+import { LoggerService } from "../logger/logger.service";
+import { Logger } from "../logger/logger.decorator";
 
 @Injectable()
 export class UsersService {
   constructor(
+    @Logger("UserService")
+    private readonly logger: LoggerService,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly pwdService: PasswordService,
@@ -68,9 +76,10 @@ export class UsersService {
   }
 
   async runRawQuery(username: string) {
+    this.logger.log("run raw query");
     const user = await this.databaseService.findByUsername(username);
-    if(user){
-      throw new BadRequestException("User isn't found")
+    if (user) {
+      throw new BadRequestException("User isn't found");
     }
     return user;
   }

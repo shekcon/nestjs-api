@@ -77,7 +77,7 @@ export class UsersController {
   }
   @Get("rawquery/:username")
   @Anonymous()
-  async runRawQuery(@Param('username') username: string ) {
+  async runRawQuery(@Param("username") username: string) {
     return await this.userService.runRawQuery(username);
   }
 }

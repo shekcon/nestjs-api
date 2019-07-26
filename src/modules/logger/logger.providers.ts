@@ -1,0 +1,22 @@
+import { storePrefixs } from "./logger.decorator";
+import { Provider } from "@nestjs/common";
+import { LoggerService } from "./logger.service";
+
+function loggerFactory(logger: LoggerService, prefix: string) {
+  if (prefix) {
+    logger.setPrefix(prefix);
+  }
+  return logger;
+}
+
+function createLoggerProvider(prefix: string): Provider<LoggerService> {
+  return {
+    provide: `LoggerService${prefix}`,
+    useFactory: logger => loggerFactory(logger, prefix),
+    inject: [LoggerService]
+  };
+}
+
+export function createLoggerProviders(): Array<Provider<LoggerService>> {
+  return storePrefixs.map(prefix => createLoggerProvider(prefix));
+}
