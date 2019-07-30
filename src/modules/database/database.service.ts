@@ -24,4 +24,11 @@ export class DatabaseService {
       [username, UserRole.admin]
     );
   }
+  async findOne(username: string) {
+    return await this.manger
+      .createQueryBuilder()
+      .select()
+      .from(User, "user")
+      .where("user.username=:username", { username: username });
+  }
 }
