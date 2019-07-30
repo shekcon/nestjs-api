@@ -7,19 +7,19 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
-    "start": "npm run start:prod",
+    "prestart": "npm run prestart:prod",
+    "start": "pm2-runtime start ecosystem.config.js --env production",
     "local": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "concurrently --handle-input \"wait-on dist/main.js && nodemon\" \"tsc -w -p tsconfig.build.json\" ",
     "start:debug": "nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && npm run build",
-    "start:prod": "node dist/main.js",
+    "start:prod": "pm2 start dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "postinstall": "npm run prestart:prod"
   },
   "dependencies": {
@@ -48,7 +48,8 @@
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
     "swagger-ui-express": "^4.0.7",
-    "typeorm": "^0.2.18"
+    "typeorm": "^0.2.18",
+    "pm2": "^3.5.1"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.0.0",

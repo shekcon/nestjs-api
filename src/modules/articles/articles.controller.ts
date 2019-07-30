@@ -3,7 +3,9 @@ import { ArticlesService } from "./articles.service";
 import { Authorize } from "../auth/decorators/auth.decorator";
 import { IRequest } from "../common/interfaces/request.interface";
 import { Article } from "./articles.enity";
+import { ApiUseTags } from "@nestjs/swagger";
 
+@ApiUseTags("Articles")
 @Authorize()
 @Controller("articles")
 export class ArticlesController {

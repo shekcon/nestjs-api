@@ -1,6 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { ValidationPipe, CacheInterceptor } from "@nestjs/common";
+import { ValidationPipe } from "@nestjs/common";
 import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 import * as helmet from "helmet";
 import * as rateLimit from "express-rate-limit";
@@ -22,6 +22,7 @@ async function bootstrap() {
     .setVersion("1.0")
     .addTag("Intro", "Nestjs + TypeOrm + PostgreSQL")
     .addTag("Auth", "Authenticate & Authorize role & Create token access")
+    .addTag("Articles", "Create or read a article of user")
     .addTag("Users", "CRUD user & must to authorize before perform action")
     .addTag("Images", "Upload image and retrieve image")
     .addTag("Heroes", "Using CRUD of nestjs for RESTful APIs")
