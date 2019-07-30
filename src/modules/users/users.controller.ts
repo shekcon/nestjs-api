@@ -8,7 +8,6 @@ import {
   Patch,
   Delete,
   HttpCode,
-  UseGuards,
   UseFilters,
   UseInterceptors
 } from "@nestjs/common";
@@ -17,16 +16,14 @@ import { UserPostDto } from "./dto/users.post";
 import { UserPatchDto } from "./dto/user.patch";
 import { UserResponse } from "./interfaces/response.interface";
 import { ApiBearerAuth, ApiUseTags } from "@nestjs/swagger";
-import { RolesGuard } from "../auth/guards/roles.guard";
 import { UserRole } from "./users.role";
-import { Authorize } from "../auth/guards/authorize.guard";
+import { Authorize } from "../auth/decorators/auth.decorator";
 import { Anonymous, Roles, Claim } from "../auth/decorators/auth.decorator";
-import { ClaimGuard } from "../auth/guards/claim.guard";
 import { User } from "./users.entity";
 
 @UseFilters()
 @UseInterceptors()
-@UseGuards(Authorize, RolesGuard, ClaimGuard)
+@Authorize()
 @ApiUseTags("Users")
 @Controller("api/users")
 export class UsersController {
@@ -75,6 +72,7 @@ export class UsersController {
     this.userService.detele({ id: id });
     return { message: "Delete user successfully!" };
   }
+
   @Get("rawquery/:username")
   @Anonymous()
   async runRawQuery(@Param("username") username: string) {

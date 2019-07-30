@@ -1,22 +1,15 @@
-import {
-  Controller,
-  UseGuards,
-  UseFilters,
-  UseInterceptors
-} from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors } from "@nestjs/common";
 import { Crud, Override } from "@nestjsx/crud";
 import { Hero } from "./hero.entity";
 import { HeroesService } from "./heroes.service";
 import { ApiUseTags, ApiBearerAuth } from "@nestjs/swagger";
 import { UserRole } from "../users/users.role";
-import { Authorize } from "../auth/guards/authorize.guard";
-import { RolesGuard } from "../auth/guards/roles.guard";
-import { ClaimGuard } from "../auth/guards/claim.guard";
+import { Authorize } from "../auth/decorators/auth.decorator";
 import { Anonymous, Roles, Claim } from "../auth/decorators/auth.decorator";
 
 @UseInterceptors()
 @UseFilters()
-@UseGuards(Authorize, RolesGuard, ClaimGuard)
+@Authorize()
 @ApiUseTags("Heroes")
 @Crud({
   model: {

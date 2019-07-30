@@ -1,18 +1,10 @@
-import {
-  Controller,
-  Post,
-  UseGuards,
-  Body,
-  Request,
-  Get,
-  Param
-} from "@nestjs/common";
+import { Controller, Post, Body, Request, Get, Param } from "@nestjs/common";
 import { ArticlesService } from "./articles.service";
-import { Authorize } from "../auth/guards/authorize.guard";
+import { Authorize } from "../auth/decorators/auth.decorator";
 import { IRequest } from "../common/interfaces/request.interface";
 import { Article } from "./articles.enity";
 
-@UseGuards(Authorize)
+@Authorize()
 @Controller("articles")
 export class ArticlesController {
   constructor(private readonly service: ArticlesService) {}

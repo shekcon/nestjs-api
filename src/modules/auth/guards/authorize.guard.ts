@@ -5,7 +5,7 @@ import { Reflector } from "@nestjs/core";
 import { AuthType } from "../auth.type";
 
 @Injectable()
-export class Authorize extends AuthGuard("jwt") {
+export class AuthorizeGuard extends AuthGuard("jwt") {
   constructor(private readonly reflector: Reflector) {
     super();
   }

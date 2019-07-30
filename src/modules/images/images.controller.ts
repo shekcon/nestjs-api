@@ -6,18 +6,17 @@ import {
   Get,
   Param,
   Res,
-  UseGuards,
   UseInterceptors
 } from "@nestjs/common";
 import { ApiConsumes, ApiImplicitFile, ApiUseTags } from "@nestjs/swagger";
 import { IRequest } from "../common/interfaces/request.interface";
-import { Authorize } from "../auth/guards/authorize.guard";
+import { Authorize } from "../auth/decorators/auth.decorator";
 import { Anonymous } from "../auth/decorators/auth.decorator";
 import { IResponse } from "../common/interfaces/response.interface";
 import { ImagesService } from "./images.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 
-@UseGuards(Authorize)
+@Authorize()
 @ApiUseTags("Images")
 @Controller("api/images")
 export class ImagesController {
